@@ -21,18 +21,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
         - name: Checkout
-        uses: actions/checkout@v2
+          uses: actions/checkout@v2
 
         - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
+          uses: aws-actions/configure-aws-credentials@v1
+          with:
             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
             aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
             aws-region: us-east-2
 
         - name: Push to EC2
-        id: deploy
-        run: |
+          id: deploy
+          run: |
             # Assuming the Deployment Group is already setup
             aws deploy create-deployment \
             --application-name codedeploy \
