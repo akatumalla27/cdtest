@@ -1,0 +1,19 @@
+version: 0.2
+            
+phases:
+    install:
+      runtime-versions:
+          go: 1.14
+
+  build:
+    commands:
+
+      # Build our application
+      - go build -o app
+
+artifacts:
+  files:
+    - app
+    - appspec.yml
+    - buildspec.yml
+    - scripts/*

@@ -18,12 +18,24 @@ on:
         - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 jobs:
+  generate:
+    name: Create release-artifacts
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@master
+        - name: Generate
+          uses: skx/github-action-build@master
+          with:
+            builder: .github/build  
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
         - name: Checkout
           uses: actions/checkout@v2
+          
+        - name: Build
+          run: go build -v . -o app
 
         - name: Configure AWS credentials
           uses: aws-actions/configure-aws-credentials@v1
@@ -31,7 +43,7 @@ jobs:
             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
             aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
             aws-region: us-east-2
-
+        
         - name: Push to EC2
           id: deploy
           run: |
@@ -41,6 +53,9 @@ jobs:
             --deployment-group-name githubdeploy \
             --deployment-config-name CodeDeployDefault.OneAtATime \
             --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
+
+        # - name: Build
+        #   run: go build -v . -o app
 # on:
 #     workflow_dispatch:
 #       inputs:

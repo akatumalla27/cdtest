@@ -21,7 +21,7 @@ jobs:
             fi
     
       - name: Build
-        run: go build -v .
+        run: go build -v . -o app
     
       - name: Validates GO releaser config
         uses: docker://goreleaser/goreleaser:latest
