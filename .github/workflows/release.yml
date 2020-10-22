@@ -12,11 +12,6 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v1
 
-      - name: Validates GO releaser config
-        uses: docker://goreleaser/goreleaser:latest
-        with:
-          args: check
-
       - name: Get dependencies
           run: |
             go get -v -t -d ./...
@@ -24,10 +19,15 @@ jobs:
                 curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
                 dep ensure
             fi
-      
-     - name: Build
+    
+      - name: Build
           run: go build -v .
-
+    
+      - name: Validates GO releaser config
+          uses: docker://goreleaser/goreleaser:latest
+          with:
+            args: check
+          
       - name: Create release on GitHub
         uses: docker://goreleaser/goreleaser:latest
         with:
