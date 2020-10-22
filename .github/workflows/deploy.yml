@@ -6,9 +6,10 @@
 #
 # Then, you need to trigger a first build in the AWS Amplify Console to
 # fully configure it.
-"""
-Deploy on release tag from GitHub.
-"""
+# """
+# Deploy on release tag from GitHub.
+# """
+name: DeployAWS
 
 on:
   release:
