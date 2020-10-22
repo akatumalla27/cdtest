@@ -25,7 +25,7 @@ jobs:
                 dep ensure
             fi
       
-            - name: Build
+     - name: Build
           run: go build -v .
 
       - name: Create release on GitHub
