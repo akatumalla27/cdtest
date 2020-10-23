@@ -1,9 +1,9 @@
 name: Release
 on:
-  create:
-    tags:
-      - v*
-
+  push:
+    branches: [ main ]
+  pull_request:
+    
 jobs:
   release:
     name: Release on GitHub
@@ -21,12 +21,29 @@ jobs:
             fi
     
       - name: Build
-        run: go build -v . -o app
+        run: go build -o app
     
       - name: Validates GO releaser config
         uses: docker://goreleaser/goreleaser:latest
         with:
           args: check
+          
+      - name: Create local changes
+        run: |
+              go build -o app
+        
+      - name: Commit files
+        run: |
+              git config --local user.email "alekhya@evergreeninnovations.co"
+              git config --local user.name "alekhya@evergreeninnovations.co"
+              git commit -m "Add changes" -a
+        
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            branch: ${{ github.ref }}
+            tags: v0.1.17
           
       - name: Create release on GitHub
         uses: docker://goreleaser/goreleaser:latest
