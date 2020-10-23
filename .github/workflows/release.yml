@@ -46,9 +46,9 @@ jobs:
             branch: ${{ github.ref }}
             tags: v0.1.17
           
-      - name: Create release on GitHub
-        uses: docker://goreleaser/goreleaser:latest
-        with:
-          args: release
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      # - name: Create release on GitHub
+      #   uses: docker://goreleaser/goreleaser:latest
+      #   with:
+      #     args: release
+      #   env:
+      #     GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
