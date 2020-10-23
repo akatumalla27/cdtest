@@ -27,6 +27,13 @@ jobs:
           uses: skx/github-action-build@master
           with:
             builder: .github/build  
+        - name: Upload the artifacts
+          uses: skx/github-action-publish-binaries@master
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            args: 'example-*'
+        
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
@@ -51,8 +58,7 @@ jobs:
             --deployment-config-name CodeDeployDefault.OneAtATime \
             --github-location repository=${{ github.repository }},commitId=${{ github.sha }}
 
-        - name: Build
-          run: go build -o app
+        
 # on:
 #     workflow_dispatch:
 #       inputs:
