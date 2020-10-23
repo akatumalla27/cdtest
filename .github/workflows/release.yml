@@ -36,10 +36,10 @@ jobs:
         run: |
               git add .
               git config --local user.email "alekhya@evergreeninnovations.co"
-              git config --local user.name "akatumalla27"
+              git config --local user.name "alekhya@evergreeninnovations.co"
               git commit -m "Add changes" -a
               git tag v0.1.19
-        
+
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
