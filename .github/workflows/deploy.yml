@@ -18,21 +18,21 @@ on:
         - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 jobs:
-  generate:
-    name: Create release-artifacts
-    runs-on: ubuntu-latest
-    steps:
-        - uses: actions/checkout@master
-        - name: Generate
-          uses: skx/github-action-build@master
-          with:
-            builder: .github/build  
-        - name: Upload the artifacts
-          uses: skx/github-action-publish-binaries@master
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          with:
-            args: 'example-*'
+#   generate:
+#     name: Create release-artifacts
+#     runs-on: ubuntu-latest
+#     steps:
+#         - uses: actions/checkout@master
+#         - name: Generate
+#           uses: skx/github-action-build@master
+#           with:
+#             builder: .github/build  
+#         - name: Upload the artifacts
+#           uses: skx/github-action-publish-binaries@master
+#           env:
+#             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           with:
+#             args: 'example-*'
         
   deploy:
     name: Deploy
@@ -47,6 +47,9 @@ jobs:
             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
             aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
             aws-region: us-east-2
+        
+        - name: Build
+          run: go build -o app
         
         - name: Push to EC2
           id: deploy
